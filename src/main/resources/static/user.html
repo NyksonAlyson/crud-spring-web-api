@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="ISO-8859-1">
+<title>Usuarios</title>
+<link rel = "icon" href ="profile.png" >
+<!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+	<style type="text/css">
+	html{
+		margin-left: 5%;
+		margin-right:5%;
+		margin-top:6%;
+	}
+	
+	</style>
+
+</head>
+<body>
+
+
+<div class="p-1 text-center bg-light">
+    <h1 class="mb-1">Usuários no Sistema</h1>
+    
+  </div>
+ 
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+ 
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"></a>
+   <img src="/imagens/profile.png" alt="" width="40" height="32">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="user.html">Usuários</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="product.html">Produtos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+<hr>
+
+<form action="" id="Formulariodecadastro" >
+<div class="mb-1 form-group col-sm-2">
+  <label for="idcon" class="form-label">Cod Usuário</label>
+  <input type="text" class="form-control" id="idcon" readonly="readonly">
+</div>
+
+<div class="mb-1 form-group col-sm-4">
+  <label for="name" class="form-label">	Nome do cliente</label>
+  <input type="text" class="form-control" id="name" placeholder="informe um nome">
+  
+</div>
+
+<div class="mb-1 form-group col-sm-2">
+  <label for="cpf" class="form-label">CPF do cliente</label>
+  
+  <input type=text class="form-control cpf-mask" id="cpf" placeholder="Ex.: 000.000.000-00" maxlength="10" autocomplete="off">
+</div>
+<br>
+
+</form>
+<button type="button" class="btn btn-secondary"onclick="document.getElementById('Formulariodecadastro').reset();">Novo</button>
+<button type="button" class="btn btn-success"onclick="salvarUsuario()">Salvar</button>
+<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalpesquisarUsers">Pesquisar</button>
+<button type="button" class="btn btn-danger" onclick="deletardaTela();">Excluir</button>
+
+
+
+<div class="modal fade" id="modalpesquisarUsers" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pesquisa de Usuarios</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Informe um Nome:</label>
+            <input type="text" class="form-control" id="nameBusca">
+          </div>
+          <button type="button" class="btn btn-success"onclick="pesquisarUsuarios()">Buscar</button>
+         
+        </form>
+        
+        <div style="height: 300px;overflow:scroll;">
+        <table class="table"id="tabelaResultados">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nome</th>
+      <th scope="col">CPF</th>
+      <th scope="col">Editar</th>
+      <th scope="col">Deletar</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+</table>
+   </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="text-center text-white fixed-bottom" style="background-color: #21081a;">
+  <!-- Grid container -->
+  <div class="container p-2"></div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+   <p>App desenvolvido por <a href="https://github.com/NyksonAlyson" target="_blank" rel="noreferrer">Nykson Alyson</a></p>
+  <div class="text-center p-1" style="background-color: rgba(0, 0, 0, 0.2);">
+  
+  </div>
+  <!-- Copyright -->
+</footer>
+
+
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+<!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+	
+	
+	function deletardaTela(){
+	
+	var idcon =$('#idcon').val();
+	
+	if(idcon != null && idcon.trim() !=''){
+		deleteUser(idcon);
+		document.getElementById('Formulariodecadastro').reset();
+	
+	
+		
+		}else{
+		alert('informe um usuario válido!');
+		return false;
+		}	
+		
+		
+}
+
+function deleteUser(idcon){
+	
+		if(confirm('Dejesa realmente deletar?')){
+	
+		$.ajax({
+		method:"DELETE",
+		url: "users/delete",
+		data: "id=" +idcon,
+		success: function(response){
+	
+		$('#'+idcon).remove();
+		
+		alert(response +"Usuario deletado!");	
+	
+	}
+	}).fail(function(xhr, status, errorThrown){		
+		alert("Erro ao salvar:"+ xhr.responseText);
+		});
+		
+		}
+
+}
+
+	function colocarEmEdicao(idcon){
+	$.ajax({
+		method:"GET",
+		url: "users/buscarUserid",
+		data: "iduser=" +idcon,
+		success: function(response){
+		
+		$('#idcon').val(response.idcon);
+		$('#name').val(response.name);
+		$('#cpf').val(response.cpf);
+		
+		$('#modalpesquisarUsers').modal('hide');
+	}
+	}).fail(function(xhr, status, errorThrown){		
+		alert("Erro ao salvar:"+ xhr.responseText);
+		});
+	
+	}
+
+
+	function pesquisarUsuarios(){
+	
+	var name =$('#nameBusca').val();
+		
+		
+		$.ajax({
+		method:"GET",
+		url: "users/buscarPorNome",
+		data: "name=" +name,
+		success: function(response){
+		$('#tabelaResultados > tbody > tr').remove();
+		
+		for(var i=0; i<response.length; i++){
+			$('#tabelaResultados > tbody').append('<tr id="'+response[i].idcon+'"><td>'+response[i].idcon+'</td><td>'+response[i].name+'</td><td>'+response[i].cpf+'</td><td><button type="button"onclick="colocarEmEdicao('+response[i].idcon+')" class="btn btn-warning">Alterar</button></td><td><button type="button"onclick="deleteUser('+response[i].idcon+')" class="btn btn-danger">Excluir</button></td></tr>');
+		}	
+	}
+	}).fail(function(xhr, status, errorThrown){		
+		alert("Erro ao salvar:"+ xhr.responseText);
+		});
+	
+	}
+
+	function salvarUsuario(){
+	var idcon =$("#idcon").val();
+	var name =$("#name").val();
+	var cpf =$("#cpf").val();
+	
+	if(name.trim()==''){
+		alert('preencha o campo nome')
+		$('#name').focus();
+			return false
+			
+	}else if(cpf.trim()===''){
+		alert('Preencha o campo cpf')
+			$('#cpf').focus();
+			return false
+	}
+	
+	$.ajax({
+		method:"POST",
+		url: "users/salvar",
+		data: JSON.stringify({idcon: idcon, name: name, cpf: cpf}),
+		contentType: "application/json; charset=utf-8",
+		success: function(response){
+			$("#idcon").val(response.idcon);
+			document.getElementById('Formulariodecadastro').reset();
+			alert("salvo com sucesso!");
+			
+		}
+	}).fail(function(xhr, status, errorThrown){		
+		alert("Erro ao salvar:"+ xhr.responseText);
+		});
+	
+	
+	}
+
+</script>
+
+</body>
+</html>
