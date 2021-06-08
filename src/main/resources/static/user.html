@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Usuarios</title>
+<title>Clientes</title>
 <link rel = "icon" href ="profile.png" >
 <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -11,7 +11,7 @@
 	html{
 		margin-left: 5%;
 		margin-right:5%;
-		margin-top:6%;
+		margin-top:1%;
 	}
 	
 	</style>
@@ -21,7 +21,7 @@
 
 
 <div class="p-1 text-center bg-light">
-    <h1 class="mb-1">Usuários no Sistema</h1>
+    <h1 class="mb-1">Clientes no Sistema</h1>
     
   </div>
  
@@ -41,7 +41,7 @@
           <a class="nav-link active" aria-current="page" href="index.html">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="user.html">Usuários</a>
+          <a class="nav-link" href="user.html">Clientes</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="product.html">Produtos</a>
@@ -59,7 +59,7 @@
 
 <form action="" id="Formulariodecadastro" >
 <div class="mb-1 form-group col-sm-2">
-  <label for="idcon" class="form-label">Cod Usuário</label>
+  <label for="idcon" class="form-label">Cod Cliente</label>
   <input type="text" class="form-control" id="idcon" readonly="readonly">
 </div>
 
@@ -72,8 +72,15 @@
 <div class="mb-1 form-group col-sm-2">
   <label for="cpf" class="form-label">CPF do cliente</label>
   
-  <input type=text class="form-control cpf-mask" id="cpf" placeholder="Ex.: 000.000.000-00" maxlength="10" autocomplete="off">
+  <input type=text class="form-control cpf-mask" id="cpf" placeholder="Ex.: 000.000.000-00" maxlength="11" autocomplete="off">
 </div>
+
+<div class="mb-1 form-group col-sm-4">
+  <label for="email" class="form-label">E-mail do cliente</label>
+  <input type="text" class="form-control" id="email" placeholder="informe um E-mail">
+  
+</div>
+
 <br>
 
 </form>
@@ -106,10 +113,12 @@
   <thead>
     <tr>
       <th scope="col">ID</th>
-      <th scope="col">Nome</th>
+      <th scope="col">NOME</th>
       <th scope="col">CPF</th>
-      <th scope="col">Editar</th>
-      <th scope="col">Deletar</th>
+       <th scope="col">E-MAIL</th>
+      <th scope="col">EDITAR</th>
+      <th scope="col">DELETAR</th>
+      
     </tr>
   </thead>
   <tbody>
@@ -132,7 +141,7 @@
 
   <!-- Copyright -->
    <p>App desenvolvido por <a href="https://github.com/NyksonAlyson" target="_blank" rel="noreferrer">Nykson Alyson</a></p>
-  <div class="text-center p-1" style="background-color: rgba(0, 0, 0, 0.2);">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
   
   </div>
   <!-- Copyright -->
@@ -199,6 +208,7 @@ function deleteUser(idcon){
 		$('#idcon').val(response.idcon);
 		$('#name').val(response.name);
 		$('#cpf').val(response.cpf);
+		$('#email').val(response.email);
 		
 		$('#modalpesquisarUsers').modal('hide');
 	}
@@ -222,7 +232,7 @@ function deleteUser(idcon){
 		$('#tabelaResultados > tbody > tr').remove();
 		
 		for(var i=0; i<response.length; i++){
-			$('#tabelaResultados > tbody').append('<tr id="'+response[i].idcon+'"><td>'+response[i].idcon+'</td><td>'+response[i].name+'</td><td>'+response[i].cpf+'</td><td><button type="button"onclick="colocarEmEdicao('+response[i].idcon+')" class="btn btn-warning">Alterar</button></td><td><button type="button"onclick="deleteUser('+response[i].idcon+')" class="btn btn-danger">Excluir</button></td></tr>');
+			$('#tabelaResultados > tbody').append('<tr id="'+response[i].idcon+'"><td>'+response[i].idcon+'</td><td>'+response[i].name+'</td><td>'+response[i].cpf+'</td><td>'+response[i].email+'</td><td><button type="button"onclick="colocarEmEdicao('+response[i].idcon+')" class="btn btn-warning">Alterar</button></td><td><button type="button"onclick="deleteUser('+response[i].idcon+')" class="btn btn-danger">Excluir</button></td></tr>');
 		}	
 	}
 	}).fail(function(xhr, status, errorThrown){		
@@ -235,6 +245,7 @@ function deleteUser(idcon){
 	var idcon =$("#idcon").val();
 	var name =$("#name").val();
 	var cpf =$("#cpf").val();
+	var email=$("#email").val();
 	
 	if(name.trim()==''){
 		alert('preencha o campo nome')
@@ -245,12 +256,17 @@ function deleteUser(idcon){
 		alert('Preencha o campo cpf')
 			$('#cpf').focus();
 			return false
+			
+	}else if(email.trim()===''){
+		alert('Preencha o campo email')
+			$('#email').focus();
+			return false
 	}
 	
 	$.ajax({
 		method:"POST",
 		url: "users/salvar",
-		data: JSON.stringify({idcon: idcon, name: name, cpf: cpf}),
+		data: JSON.stringify({idcon: idcon, name: name, cpf: cpf, email: email}),
 		contentType: "application/json; charset=utf-8",
 		success: function(response){
 			$("#idcon").val(response.idcon);

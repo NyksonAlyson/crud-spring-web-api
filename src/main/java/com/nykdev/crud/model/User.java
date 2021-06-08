@@ -15,16 +15,18 @@ public class User {
 	private long idcon;
 	private String name;
 	private String cpf;
+	private String email;
 	
 	public User() {
 		
 	}
 	
-	public User(long idcon, String name, String cpf) {
+	public User(long idcon, String name, String cpf, String email) {
 		super();
 		this.idcon = idcon;
 		this.name = name;
 		this.cpf = cpf;
+		this.email=email;
 	}
 	
 	public long getIdcon() {
@@ -44,6 +46,14 @@ public class User {
 	}
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

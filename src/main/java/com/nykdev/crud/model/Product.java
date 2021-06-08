@@ -14,17 +14,20 @@ public class Product {
 	private long idcon;
 	private String name;
 	private String categoria;
+	private Double valor;
 	
 	public Product() {
 		super();
 	}
 
 
-	public Product(long idcon, String name, String categoria) {
+	public Product(long idcon, String name, Double valor, String categoria) {
 		super();
 		this.idcon = idcon;
 		this.name = name;
+		this.valor =valor;
 		this.categoria = categoria;
+		
 	}
 
 
@@ -51,8 +54,15 @@ public class Product {
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-	
-	
+
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
 	
 	
 

@@ -9,7 +9,7 @@
 	html{
 		margin-left: 5%;
 		margin-right:5%;
-		margin-top:6%;
+		margin-top:1%;
 	}
 	</style>
 
@@ -21,6 +21,7 @@
     <h1 class="mb-1">Produtos no Sistema</h1>
     
   </div>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
  
   <div class="container-fluid">
@@ -35,7 +36,7 @@
           <a class="nav-link active" aria-current="page" href="index.html">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="user.html">Usuarios</a>
+          <a class="nav-link" href="user.html">Clientes</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="product.html">Produtos</a>
@@ -54,17 +55,22 @@
 <form action=""id="formularioProdutos">
 <div class="mb-1 form-group col-sm-2">
   <label for="exampleFormControlInput1" class="form-label">Cod Produto</label>
-  <input type="email" class="form-control" id="idcon" readonly="readonly">
+  <input type="text" class="form-control" id="idcon" readonly="readonly">
 </div>
 
 <div class="mb-1 form-group col-sm-4">
   <label for="exampleFormControlInput1" class="form-label">Nome do Produto</label>
-  <input type="email" class="form-control" id="name" placeholder="informe o produto">
+  <input type="text" class="form-control" id="name" placeholder="informe o produto">
+</div>
+
+<div class="mb-1 form-group col-sm-2">
+  <label for="exampleFormControlInput1" class="form-label">Valor do Produto</label>
+  <input type="number" class="form-control" id="valor" placeholder="informe a valor do produto">
 </div>
 
 <div class="mb-1 form-group col-sm-4">
   <label for="exampleFormControlInput1" class="form-label">Categoria do Produto</label>
-  <input type="email" class="form-control" id="categoria" placeholder="informe a categoria">
+  <input type="text" class="form-control" id="categoria" placeholder="informe a categoria">
 </div>
 
 <br>
@@ -99,10 +105,11 @@
   <thead>
     <tr>
       <th scope="col">ID</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Categoria</th>
-      <th scope="col">Editar</th>
-      <th scope="col">Deletar</th>
+      <th scope="col">NOME</th>
+      <th scope="col">VALOR</th>
+      <th scope="col">CATEGORIA</th>
+      <th scope="col">EDITAR</th>
+      <th scope="col">DELETAR</th>
     </tr>
   </thead>
   <tbody>
@@ -125,7 +132,7 @@
 
   <!-- Copyright -->
    <p>App desenvolvido por <a href="https://github.com/NyksonAlyson" target="_blank" rel="noreferrer">Nykson Alyson</a></p>
-  <div class="text-center p-1" style="background-color: rgba(0, 0, 0, 0.2);">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
   
   </div>
   <!-- Copyright -->
@@ -149,22 +156,30 @@ function salvarProduto(){
 	
 	var idcon =$("#idcon").val();
 	var name =$("#name").val();
-	var categoria =$("#categoria").val();
+	var valor=$("#valor").val();
+	var categoria=$("#categoria").val();
 	
 	if(name.trim()===''){
 	alert('informe um nome')
 		$('#name').focus();
 		return false
+		
+	}else if(valor.trim()===''){
+		alert('informe um valor')
+		$('#valor').focus();
+		return false
+		
 	}else if(categoria.trim()===''){
 		alert('informe uma categoria')
 		$('#categoria').focus();
 		return false
+	
 	}
 
 	$.ajax({
 		method:"POST",
 		url: "products/salvar",
-		data: JSON.stringify({idcon: idcon, name: name, categoria: categoria}),
+		data: JSON.stringify({idcon: idcon, name: name, valor: valor, categoria: categoria}),
 		contentType: "application/json; charset=utf-8",
 		success: function(response){
 			$("#idcon").val(response.idcon);
@@ -179,8 +194,6 @@ function salvarProduto(){
 	
 	}
 
-
-
 function pesquisarProdutos(){
 	
 	var name =$('#nameBusca').val();
@@ -193,7 +206,7 @@ function pesquisarProdutos(){
 		$('#tabelaResultados > tbody > tr').remove();
 		
 		for(var i=0; i<response.length; i++){
-			$('#tabelaResultados > tbody').append('<tr id="'+response[i].idcon+'"><td>'+response[i].idcon+'</td><td>'+response[i].name+'</td><td>'+response[i].categoria+'</td><td><button type="button"onclick="colocarEmEdicao('+response[i].idcon+')" class="btn btn-warning">Alterar</button></td><td><button type="button"onclick="deleteProduct('+response[i].idcon+')" class="btn btn-danger">Excluir</button></td></tr>');
+			$('#tabelaResultados > tbody').append('<tr id="'+response[i].idcon+'"><td>'+response[i].idcon+'</td><td>'+response[i].name+'</td><td>'+response[i].valor+'</td><td>'+response[i].categoria+'</td><td><button type="button"onclick="colocarEmEdicao('+response[i].idcon+')" class="btn btn-warning">Alterar</button></td><td><button type="button"onclick="deleteProduct('+response[i].idcon+')" class="btn btn-danger">Excluir</button></td></tr>');
 		}	
 	}
 	}).fail(function(xhr, status, errorThrown){		
@@ -236,6 +249,7 @@ function colocarEmEdicao(idcon){
 		
 		$('#idcon').val(response.idcon);
 		$('#name').val(response.name);
+		$('#valor').val(response.valor);
 		$('#categoria').val(response.categoria);
 		
 		$('#modalpesquisarProdutos').modal('hide');
