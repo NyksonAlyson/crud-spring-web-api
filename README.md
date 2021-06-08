@@ -1,5 +1,5 @@
 # CRUD Web Completo com Spring Boot REST API com JAVA, PostgreSql, Javascrip, Html, BootStrap 5.0
-# Link da aplicação: https://crud-spring-web-api.herokuapp.com/index.html
+# Link da aplicação: https://crud-spring-web.herokuapp.com/
 
 <h3>Tela Home</h3>
 <p align= "center">
